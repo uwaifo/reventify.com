@@ -3,6 +3,11 @@ import "express-async-errors";
 import cookieSession from "cookie-session";
 import colors = require("colors");
 
+//Swagger imports
+import swaggerJsDoc from "swagger-jsdoc";
+import swaggerUi from "swagger-ui-express";
+import { swaggerDocs } from "./services/documentation";
+
 import { json } from "body-parser";
 import mongoose from "mongoose";
 
@@ -32,6 +37,8 @@ app.use(signupRouter);
 app.use(signinRouter);
 app.use(signoutRouter);
 
+//Documentation Config
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 //Test route
 app.all("*", async () => {
   //Utilizing async-errors

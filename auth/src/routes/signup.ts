@@ -2,6 +2,7 @@ import express, { Request, Response } from "express";
 import { body, validationResult } from "express-validator";
 import jwt from "jsonwebtoken";
 //Locals
+import { validateRequest } from "../middlewares/validate_request";
 import { errorHandler } from "../middlewares/error_handler";
 import { RequestvalidationError } from "../errors/request_validation_errors";
 import { BadRequestError } from "../errors/bad_request_error";
@@ -21,13 +22,8 @@ router.post(
       .isLength({ min: 4, max: 20 })
       .withMessage("Password must be between 4 and 20 character long"),
   ],
+  validateRequest,
   async (req: Request, res: Response) => {
-    const errors = validationResult(req);
-
-    if (!errors.isEmpty()) {
-      throw new RequestvalidationError(errors.array());
-    }
-
     const { email, password } = req.body;
     //Query the db for the params passed
 

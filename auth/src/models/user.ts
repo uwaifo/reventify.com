@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose, { Schema } from "mongoose";
 
 //Local
 import { Password } from "../services/password";
@@ -20,14 +20,68 @@ interface UserDoc extends mongoose.Document {
 }
 const userSchema = new mongoose.Schema(
   {
+    social_credential: {
+      type: Boolean,
+      default: false,
+    },
+    social_credential_provider: {
+      type: String,
+      required: false,
+      enum: ["google", "linkedin"],
+    },
+    first_name: {
+      type: String,
+      required: true,
+      default: "",
+    },
+    last_name: {
+      type: String,
+      required: true,
+      default: "",
+    },
+    phone_number: {
+      type: String,
+      required: false,
+    },
     email: {
       type: String,
       required: true,
+      unique: true,
     },
-
+    email_verified_status: {
+      default: false,
+      type: Boolean,
+    },
+    country_of_residence: {
+      type: String,
+      required: false,
+    },
+    city_of_residence: {
+      type: String,
+      required: false,
+    },
+    user_linkedin: {
+      type: String,
+      required: false,
+    },
+    user_portfolio_url: {
+      type: String,
+      required: false,
+    },
     password: {
       type: String,
       required: true,
+    },
+    user_industry_id: {
+      type: Schema.Types.ObjectId!,
+      ref: "JobIndustry",
+      required: false,
+    },
+    user_experience_years: {
+      type: Number,
+      min: 0,
+      max: 50,
+      default: 1,
     },
   },
   {

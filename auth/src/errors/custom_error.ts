@@ -10,6 +10,7 @@ export abstract class CustomError extends Error {
 }
 
 //Here is just a sample implimentation
+/*
 class NotFoundErrer extends CustomError {
   statusCode = 404;
   message = "ok";
@@ -22,3 +23,4 @@ class NotFoundErrer extends CustomError {
     ];
   }
 }
+*/
